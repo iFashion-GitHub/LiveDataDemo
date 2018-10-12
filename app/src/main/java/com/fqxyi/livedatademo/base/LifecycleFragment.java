@@ -1,18 +1,17 @@
 package com.fqxyi.livedatademo.base;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
+import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-public class LifecycleFragment extends Fragment implements LifecycleOwner {
+public class LifecycleFragment extends Fragment implements LifecycleRegistryOwner {
 
     private LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
 
     @NonNull
     @Override
-    public Lifecycle getLifecycle() {
+    public LifecycleRegistry getLifecycle() {
         return lifecycleRegistry;
     }
 }

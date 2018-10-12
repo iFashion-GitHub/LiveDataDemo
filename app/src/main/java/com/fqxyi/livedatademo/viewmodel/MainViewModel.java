@@ -8,8 +8,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
-import com.fqxyi.livedatademo.repository.MainRepository;
 import com.fqxyi.livedatademo.bean.MainBean;
+import com.fqxyi.livedatademo.repository.MainRepository;
 
 /**
  * ViewModel的好处是: 不会在由于configuration改变引起的onDestroy而销毁数据
@@ -17,19 +17,12 @@ import com.fqxyi.livedatademo.bean.MainBean;
 public class MainViewModel extends AndroidViewModel {
 
     private MainRepository mainRepository;
+    //内存存储id，用于切换id，获取不同的请求结果，校验liveData的实现效果
+    private int id = 0;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         mainRepository = new MainRepository(application);
-    }
-
-    private MutableLiveData<String> mCurrentName;
-
-    public MutableLiveData<String> getCurrentName() {
-        if (mCurrentName == null) {
-            mCurrentName = new MutableLiveData<String>();
-        }
-        return mCurrentName;
     }
 
     /**
@@ -52,5 +45,17 @@ public class MainViewModel extends AndroidViewModel {
         });
         //返回转换后的数据
         return newLiveData;
+    }
+
+    /**
+     * 发起请求
+     */
+    public void loadData() {
+        if (id == 1) {
+            id = 2;
+        } else {
+            id = 1;
+        }
+        mainRepository.loadData(id);
     }
 }

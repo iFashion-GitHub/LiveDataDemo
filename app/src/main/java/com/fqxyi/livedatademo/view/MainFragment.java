@@ -37,25 +37,23 @@ public class MainFragment extends LifecycleFragment {
         mainFragmentBtn = (Button) rootView.findViewById(R.id.main_fragment_btn);
         mainFragmentText = (TextView) rootView.findViewById(R.id.main_fragment_text);
         //
-        mainFragmentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainViewModel.getCurrentName().setValue("test");
-            }
-        });
+        initEvent();
         initObserver();
         initLifecycle();
         return rootView;
     }
 
+    private void initEvent() {
+        mainFragmentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainViewModel.loadData();
+            }
+        });
+    }
+
     private void initObserver() {
-//        mainViewModel.getData().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                mainFragmentText.setText(s);
-//            }
-//        });
-        mainViewModel.getCurrentName().observe(this, new Observer<String>() {
+        mainViewModel.getData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 mainFragmentText.setText(s);

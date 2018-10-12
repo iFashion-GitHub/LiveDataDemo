@@ -22,34 +22,42 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainRepository {
 
     private Context context;
+    //
+    private Retrofit retrofit;
+    //
+    private final MutableLiveData<MainBean> liveData;
 
     public MainRepository(Context context) {
         this.context = context;
+        liveData = new MutableLiveData<>();
+        initRetrofit();
+    }
+
+    private void initRetrofit() {
+        synchronized (MainRepository.this) {
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .cache(new Cache(context.getDir("http_cache", Context.MODE_PRIVATE), 1024 * 1024 * 100))
+                    .readTimeout(15, TimeUnit.SECONDS)
+                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    //设置进行连接失败重试
+                    .retryOnConnectionFailure(false)
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("http://104.224.173.101:8080")
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
     }
 
     /**
-     * 获取数据
+     * 请求数据
      */
-    public MutableLiveData<MainBean> getData() {
-        final MutableLiveData<MainBean> liveData = new MutableLiveData<>();
-
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cache(new Cache(context.getDir("http_cache", Context.MODE_PRIVATE), 1024 * 1024 * 100))
-                .readTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                //设置进行连接失败重试
-                .retryOnConnectionFailure(false)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://104.224.173.101:8080")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    public void loadData(int id) {
         MainApiService mainApiService = retrofit.create(MainApiService.class);
-        Call<MainBean> call = mainApiService.getData(1);
+        Call<MainBean> call = mainApiService.getData(id);
         call.enqueue(new Callback<MainBean>() {
             @Override
             public void onResponse(Call<MainBean> call, Response<MainBean> response) {
@@ -65,7 +73,12 @@ public class MainRepository {
                 liveData.setValue(null);
             }
         });
+    }
 
+    /**
+     * 获取数据
+     */
+    public MutableLiveData<MainBean> getData() {
         return liveData;
     }
 
