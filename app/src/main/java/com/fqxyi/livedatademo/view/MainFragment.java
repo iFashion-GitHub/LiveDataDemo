@@ -15,6 +15,10 @@ import com.fqxyi.livedatademo.base.LifecycleFragment;
 import com.fqxyi.livedatademo.observer.FragmentLifecycleObserver;
 import com.fqxyi.livedatademo.viewmodel.MainViewModel;
 
+/**
+ * View层
+ * 只负责显示UI，不执行数据处理逻辑
+ */
 public class MainFragment extends LifecycleFragment {
 
     //findView

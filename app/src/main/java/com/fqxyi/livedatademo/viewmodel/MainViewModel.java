@@ -12,7 +12,9 @@ import com.fqxyi.livedatademo.bean.MainBean;
 import com.fqxyi.livedatademo.repository.MainRepository;
 
 /**
- * ViewModel的好处是: 不会在由于configuration改变引起的onDestroy而销毁数据
+ * ViewModel层
+ * 负责提供View层需要的接口，执行数据转换的逻辑
+ * 好处: 不会在由于configuration改变引起的onDestroy而销毁数据
  */
 public class MainViewModel extends AndroidViewModel {
 

@@ -5,6 +5,9 @@ import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
+/**
+ * Fragment基类
+ */
 public class LifecycleFragment extends Fragment implements LifecycleRegistryOwner {
 
     private LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);

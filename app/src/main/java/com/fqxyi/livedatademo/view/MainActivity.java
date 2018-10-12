@@ -9,6 +9,10 @@ import com.fqxyi.livedatademo.R;
 import com.fqxyi.livedatademo.base.LifecycleActivity;
 import com.fqxyi.livedatademo.observer.ActivityLifecycleObserver;
 
+/**
+ * View层
+ * 只负责显示UI，不执行数据处理逻辑
+ */
 public class MainActivity extends LifecycleActivity {
 
     @Override

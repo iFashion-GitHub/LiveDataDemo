@@ -17,7 +17,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * 数据处理类，处理从local storage或web service中得到的数据，并返回给viewModel
+ * Repository层
+ * 处理从local storage、web service、database、...中得到的数据，并返回给viewModel
  */
 public class MainRepository {
 

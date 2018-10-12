@@ -6,6 +6,9 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * 观察Fragment的生命周期变化
+ */
 public class FragmentLifecycleObserver implements LifecycleObserver {
 
     private static final String TAG = "FragmentObserver";
