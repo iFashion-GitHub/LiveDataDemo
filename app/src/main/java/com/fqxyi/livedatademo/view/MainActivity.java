@@ -6,14 +6,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.fqxyi.livedatademo.R;
-import com.fqxyi.livedatademo.base.LifecycleActivity;
+import com.fqxyi.library.BaseActivity;
 import com.fqxyi.livedatademo.observer.ActivityLifecycleObserver;
+import com.fqxyi.livedatademo.viewmodel.MainViewModel;
 
 /**
  * View层
  * 只负责显示UI，不执行数据处理逻辑
  */
-public class MainActivity extends LifecycleActivity {
+public class MainActivity extends BaseActivity<MainViewModel> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +49,10 @@ public class MainActivity extends LifecycleActivity {
 
     public void initLifecycle() {
         getLifecycle().addObserver(new ActivityLifecycleObserver(getApplicationContext()));
+    }
+
+    @Override
+    protected MainViewModel getViewModel() {
+        return null;
     }
 }

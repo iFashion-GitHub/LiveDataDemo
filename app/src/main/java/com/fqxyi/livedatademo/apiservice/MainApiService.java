@@ -2,7 +2,7 @@ package com.fqxyi.livedatademo.apiservice;
 
 import com.fqxyi.livedatademo.bean.MainBean;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -12,6 +12,6 @@ import retrofit2.http.Query;
 public interface MainApiService {
 
     @GET("/firstmybatis/queryName")
-    Call<MainBean> getData(@Query("id") int id);
+    Observable<MainBean> getData(@Query("id") int id);
 
 }

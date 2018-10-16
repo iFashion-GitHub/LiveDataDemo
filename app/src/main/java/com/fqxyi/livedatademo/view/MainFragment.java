@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fqxyi.livedatademo.R;
-import com.fqxyi.livedatademo.base.LifecycleFragment;
+import com.fqxyi.library.BaseFragment;
 import com.fqxyi.livedatademo.observer.FragmentLifecycleObserver;
 import com.fqxyi.livedatademo.viewmodel.MainViewModel;
 
@@ -19,18 +19,15 @@ import com.fqxyi.livedatademo.viewmodel.MainViewModel;
  * View层
  * 只负责显示UI，不执行数据处理逻辑
  */
-public class MainFragment extends LifecycleFragment {
+public class MainFragment extends BaseFragment<MainViewModel> {
 
     //findView
     private Button mainFragmentBtn;
     private TextView mainFragmentText;
-    //
-    private MainViewModel mainViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
     @Nullable
@@ -51,13 +48,13 @@ public class MainFragment extends LifecycleFragment {
         mainFragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainViewModel.loadData();
+                viewModel.loadData();
             }
         });
     }
 
     private void initObserver() {
-        mainViewModel.getData().observe(this, new Observer<String>() {
+        viewModel.getData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 mainFragmentText.setText(s);
@@ -67,5 +64,10 @@ public class MainFragment extends LifecycleFragment {
 
     public void initLifecycle() {
         getLifecycle().addObserver(new FragmentLifecycleObserver(getActivity().getApplicationContext()));
+    }
+
+    @Override
+    protected MainViewModel getViewModel() {
+        return ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 }
